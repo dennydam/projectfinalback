@@ -13,15 +13,22 @@ mongoose.connect(process.env.DB_URL, () => {
 
 const app = express()
 
-app.use(cors({
-  origin (origin, callback) {
-    if (origin === undefined || origin.includes('github') || origin.includes('localhost')) {
-      callback(null, true)
-    } else {
-      callback(new Error('Not allowed'), false)
-    }
-  }
-}))
+app.use(
+  cors({
+    origin(origin, callback) {
+      if (
+        origin === undefined ||
+        origin.includes('github') ||
+        origin.includes('localhost') ||
+        origin.includes('onrender')
+      ) {
+        callback(null, true)
+      } else {
+        callback(new Error('Not allowed'), false)
+      }
+    },
+  })
+)
 
 app.use((_, req, res, next) => {
   res.status(403).send({ success: false, message: '請求被拒絕' })
