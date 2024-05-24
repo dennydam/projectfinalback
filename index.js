@@ -7,9 +7,18 @@ import productsRouter from './routes/products.js'
 import products2Router from './routes/products2.js'
 import boardRouter from './routes/board.js'
 
-mongoose.connect(process.env.DB_URL, () => {
-  console.log('MongoDB Connected')
-})
+// mongoose.connect(process.env.DB_URL, () => {
+//   console.log('MongoDB Connected')
+// })
+
+mongoose
+  .connect(process.env.DB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => {
+    console.log('MongoDB Connected')
+  })
+  .catch((err) => {
+    console.error('MongoDB connection error:', err)
+  })
 
 const app = express()
 
